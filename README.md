@@ -282,13 +282,6 @@ Ver logs en tiempo real:
 docker-compose logs -f
 ```
 
-##  Contribución
-
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/nueva-funcionalidad`)
-3. Commit tus cambios (`git commit -am 'Agrega nueva funcionalidad'`)
-4. Push a la rama (`git push origin feature/nueva-funcionalidad`)
-5. Crea un Pull Request
 
 ### Estándares de Código
 
@@ -297,13 +290,16 @@ docker-compose logs -f
 - Incluir tests para nueva funcionalidad
 - Mantener cobertura de tests > 80%
 
-##  Licencia
-
-Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles.
 
 ##  Autores
 
--
+KEWIN GUZMAN DIAZ
+YEISON SAENZ CASTRO
+SINDY PATRICIA YEPES SÁNCHEZ
+LUIS MIGUEL CASTAÑEDA ARCINIEGAS
+LAURA VALENTINA AVENDAÑO TIBOCHA
+
+
 
 
 
