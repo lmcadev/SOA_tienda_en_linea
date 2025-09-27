@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: servicio-autenticacion
+  main:
+    allow-bean-definition-overriding: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${URL_EUREKA}
+
+server:
+  port: 0
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info"
+
+SECRETO_JWT: ${SECRETO_JWT}

@@ -1,0 +1,136 @@
+version: "3.9"
+
+# Archivo de composicións
+servicios:
+  eureka:
+    build: ./plataforma/eureka-servidor
+    puertos:
+      - "8761:8761"
+    entorno:
+      EUREKA_CLIENT_REGISTER_WITH_EUREKA: "false"
+      EUREKA_CLIENT_FETCH_REGISTRY: "false"
+    redes:
+      - interna
+
+  puerta_enlace:
+    build: ./plataforma/puerta-enlace
+    puertos:
+      - "8080:8080"
+    entorno:
+      URL_EUREKA: ${URL_EUREKA}
+      CLAVE_PUBLICA_JWT: ${CLAVE_PUBLICA_JWT}
+    depende_de:
+      - eureka
+    redes:
+      - interna
+      - externa
+
+  autenticacion:
+    build: ./plataforma/servicio-autenticacion
+    entorno:
+      SECRETO_JWT: ${SECRETO_JWT}
+      URL_EUREKA: ${URL_EUREKA}
+    depende_de:
+      - eureka
+    redes:
+      - interna
+
+  cola_mensajes:
+    image: rabbitmq:3-management
+    puertos:
+      - "5672:5672"
+      - "15672:15672"
+    redes:
+      - interna
+
+  bd_pedidos:
+    image: postgres:16
+    entorno:
+      POSTGRES_USER: ${USUARIO_PEDIDOS}
+      POSTGRES_PASSWORD: ${CONTRASENA_PEDIDOS}
+      POSTGRES_DB: pedidos
+    redes:
+      - interna
+
+  bd_inventario:
+    image: postgres:16
+    entorno:
+      POSTGRES_USER: ${USUARIO_INVENTARIO}
+      POSTGRES_PASSWORD: ${CONTRASENA_INVENTARIO}
+      POSTGRES_DB: inventario
+    redes:
+      - interna
+
+  bd_pagos:
+    image: postgres:16
+    entorno:
+      POSTGRES_USER: ${USUARIO_PAGOS}
+      POSTGRES_PASSWORD: ${CONTRASENA_PAGOS}
+      POSTGRES_DB: pagos
+    redes:
+      - interna
+
+  bd_notificaciones:
+    image: postgres:16
+    entorno:
+      POSTGRES_USER: ${USUARIO_NOTIFICACIONES}
+      POSTGRES_PASSWORD: ${CONTRASENA_NOTIFICACIONES}
+      POSTGRES_DB: notificaciones
+    redes:
+      - interna
+
+  pedidos:
+    build: ./servicios/servicio-pedidos
+    entorno:
+      URL_BD: ${URL_BD_PEDIDOS}
+      URL_EUREKA: ${URL_EUREKA}
+      HOST_COLA: ${HOST_COLA}
+    depende_de:
+      - eureka
+      - bd_pedidos
+      - cola_mensajes
+    redes:
+      - interna
+
+  inventario:
+    build: ./servicios/servicio-inventario
+    entorno:
+      URL_BD: ${URL_BD_INVENTARIO}
+      URL_EUREKA: ${URL_EUREKA}
+      HOST_COLA: ${HOST_COLA}
+    depende_de:
+      - eureka
+      - bd_inventario
+      - cola_mensajes
+    redes:
+      - interna
+
+  pagos:
+    build: ./servicios/servicio-pagos
+    entorno:
+      URL_BD: ${URL_BD_PAGOS}
+      URL_EUREKA: ${URL_EUREKA}
+    depende_de:
+      - eureka
+      - bd_pagos
+    redes:
+      - interna
+
+  notificaciones:
+    build: ./servicios/servicio-notificaciones
+    entorno:
+      URL_BD: ${URL_BD_NOTIFICACIONES}
+      URL_EUREKA: ${URL_EUREKA}
+      HOST_COLA: ${HOST_COLA}
+    depende_de:
+      - eureka
+      - bd_notificaciones
+      - cola_mensajes
+    redes:
+      - interna
+
+redes:
+  interna:
+    driver: bridge
+  externa:
+    driver: bridge

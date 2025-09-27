@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: servicio-pagos
+  datasource:
+    url: ${URL_BD}
+    username: ${USUARIO_PAGOS}
+    password: ${CONTRASENA_PAGOS}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${URL_EUREKA}
+
+server:
+  port: 0
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info"

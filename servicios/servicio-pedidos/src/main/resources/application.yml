@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: servicio-pedidos
+  datasource:
+    url: ${URL_BD}
+    username: ${USUARIO_PEDIDOS}
+    password: ${CONTRASENA_PEDIDOS}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${URL_EUREKA}
+
+server:
+  port: 0
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info"

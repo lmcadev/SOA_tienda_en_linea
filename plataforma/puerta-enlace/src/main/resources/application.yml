@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: puerta-enlace
+  cloud:
+    gateway:
+      routes:
+        - id: autenticacion
+          uri: lb://servicio-autenticacion
+          predicates:
+            - Path=/auth/**
+        - id: pedidos
+          uri: lb://servicio-pedidos
+          predicates:
+            - Path=/pedidos/**
+        - id: inventario
+          uri: lb://servicio-inventario
+          predicates:
+            - Path=/inventario/**
+        - id: pagos
+          uri: lb://servicio-pagos
+          predicates:
+            - Path=/pagos/**
+        - id: notificaciones
+          uri: lb://servicio-notificaciones
+          predicates:
+            - Path=/notificaciones/**
+      default-filters:
+        # El filtro JWT se aplica globalmente por defecto
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin, RETAIN_FIRST
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${URL_EUREKA}
+
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info"
+
+SECRETO_JWT: ${SECRETO_JWT}
