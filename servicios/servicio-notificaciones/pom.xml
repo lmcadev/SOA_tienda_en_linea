@@ -6,6 +6,7 @@
     <groupId>com.poli</groupId>
     <artifactId>comercio-soa-padre</artifactId>
     <version>1.0.0</version>
+    <relativePath>../../pom.xml</relativePath>
   </parent>
 
   <artifactId>servicio-notificaciones</artifactId>
@@ -44,12 +45,12 @@
     </dependency>
     <!-- Módulos comunes -->
     <dependency>
-      <groupId>com.empresa</groupId>
+      <groupId>com.poli</groupId>
       <artifactId>dto-comunes</artifactId>
       <version>1.0.0</version>
     </dependency>
     <dependency>
-      <groupId>com.empresa</groupId>
+      <groupId>com.poli</groupId>
       <artifactId>eventos-comunes</artifactId>
       <version>1.0.0</version>
     </dependency>
@@ -60,6 +61,14 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+        <version>3.3.3</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

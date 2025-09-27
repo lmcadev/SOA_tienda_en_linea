@@ -9,7 +9,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +35,7 @@ public class ControladorAutenticacion {
   @PostMapping("/login")
   public ResponseEntity<RespuestaAutenticacion> login(@Valid @RequestBody PeticionAutenticacion peticion) {
     Optional<Usuario> usuarioOpt = servicioUsuarios.buscarPorUsuario(peticion.getUsuario());
-    if (usuarioOpt.isEmpty()) {
+    if (!usuarioOpt.isPresent()) {
       return ResponseEntity.status(401).build();
     }
     Usuario usuario = usuarioOpt.get();

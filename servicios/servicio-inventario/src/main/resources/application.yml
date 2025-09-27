@@ -2,7 +2,7 @@ spring:
   application:
     name: servicio-inventario
   datasource:
-    url: ${URL_BD}
+    url: ${URL_BD_INVENTARIO}
     username: ${USUARIO_INVENTARIO}
     password: ${CONTRASENA_INVENTARIO}
   jpa:
@@ -18,7 +18,7 @@ eureka:
       defaultZone: ${URL_EUREKA}
 
 server:
-  port: 0
+  port: 8083
 
 management:
   endpoints:

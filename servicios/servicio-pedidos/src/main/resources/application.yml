@@ -2,7 +2,7 @@ spring:
   application:
     name: servicio-pedidos
   datasource:
-    url: ${URL_BD}
+    url: ${URL_BD_PEDIDOS}
     username: ${USUARIO_PEDIDOS}
     password: ${CONTRASENA_PEDIDOS}
   jpa:
@@ -18,7 +18,7 @@ eureka:
       defaultZone: ${URL_EUREKA}
 
 server:
-  port: 0
+  port: 8082
 
 management:
   endpoints:

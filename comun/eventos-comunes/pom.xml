@@ -3,9 +3,10 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>com.empresa</groupId>
+    <groupId>com.poli</groupId>
     <artifactId>comercio-soa-padre</artifactId>
     <version>1.0.0</version>
+    <relativePath>../../pom.xml</relativePath>
   </parent>
 
   <artifactId>eventos-comunes</artifactId>

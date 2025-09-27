@@ -2,7 +2,7 @@ spring:
   application:
     name: servicio-notificaciones
   datasource:
-    url: ${URL_BD}
+    url: ${URL_BD_NOTIFICACIONES}
     username: ${USUARIO_NOTIFICACIONES}
     password: ${CONTRASENA_NOTIFICACIONES}
   jpa:
@@ -18,7 +18,7 @@ eureka:
       defaultZone: ${URL_EUREKA}
 
 server:
-  port: 0
+  port: 8085
 
 management:
   endpoints:

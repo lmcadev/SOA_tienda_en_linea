@@ -20,6 +20,7 @@ import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Objects;
+import java.util.Arrays;
 
 /**
  * Filtro global para validar tokens JWT en la puerta de enlace.
@@ -29,15 +30,15 @@ public class FiltroJwt implements GlobalFilter, Ordered {
 
   private static final Logger log = LoggerFactory.getLogger(FiltroJwt.class);
 
-  @Value("${SECRETO_JWT:mi_super_secreto}")
+  @Value("${jwt.secret:mi_super_secreto_para_pruebas}")
   private String secretoJwt;
-
   /**
    * Lista de rutas que se excluyen de la validación JWT.
    */
-  private static final List<String> rutasExcluidas = List.of(
+  private static final List<String> rutasExcluidas = Arrays.asList(
       "/auth", "/auth/", "/auth/login", "/swagger-ui", "/swagger-ui/", "/v3/api-docs", "/v3/api-docs/"
   );
+
 
   @Override
   public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {

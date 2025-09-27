@@ -1,135 +1,151 @@
-version: "3.9"
-
-# Archivo de composicións
-servicios:
+# Docker Compose configuration - Testing working services first
+services:
   eureka:
     build: ./plataforma/eureka-servidor
-    puertos:
+    ports:
       - "8761:8761"
-    entorno:
+    environment:
       EUREKA_CLIENT_REGISTER_WITH_EUREKA: "false"
       EUREKA_CLIENT_FETCH_REGISTRY: "false"
-    redes:
+    networks:
       - interna
 
   puerta_enlace:
     build: ./plataforma/puerta-enlace
-    puertos:
-      - "8080:8080"
-    entorno:
+    ports:
+      - "8090:8090"
+    environment:
       URL_EUREKA: ${URL_EUREKA}
       CLAVE_PUBLICA_JWT: ${CLAVE_PUBLICA_JWT}
-    depende_de:
+    depends_on:
       - eureka
-    redes:
+    networks:
       - interna
       - externa
 
-  autenticacion:
-    build: ./plataforma/servicio-autenticacion
-    entorno:
-      SECRETO_JWT: ${SECRETO_JWT}
-      URL_EUREKA: ${URL_EUREKA}
-    depende_de:
-      - eureka
-    redes:
-      - interna
+  # autenticacion:
+  #   build: ./plataforma/servicio-autenticacion
+  #   environment:
+  #     SECRETO_JWT: ${SECRETO_JWT}
+  #     URL_EUREKA: ${URL_EUREKA}
+  #   depends_on:
+  #     - eureka
+  #   networks:
+  #     - interna
 
   cola_mensajes:
     image: rabbitmq:3-management
-    puertos:
+    ports:
       - "5672:5672"
       - "15672:15672"
-    redes:
+    networks:
       - interna
 
+  # Database services
   bd_pedidos:
     image: postgres:16
-    entorno:
+    environment:
       POSTGRES_USER: ${USUARIO_PEDIDOS}
       POSTGRES_PASSWORD: ${CONTRASENA_PEDIDOS}
       POSTGRES_DB: pedidos
-    redes:
+    networks:
       - interna
 
   bd_inventario:
     image: postgres:16
-    entorno:
+    environment:
       POSTGRES_USER: ${USUARIO_INVENTARIO}
       POSTGRES_PASSWORD: ${CONTRASENA_INVENTARIO}
       POSTGRES_DB: inventario
-    redes:
+    networks:
       - interna
 
   bd_pagos:
     image: postgres:16
-    entorno:
+    environment:
       POSTGRES_USER: ${USUARIO_PAGOS}
       POSTGRES_PASSWORD: ${CONTRASENA_PAGOS}
       POSTGRES_DB: pagos
-    redes:
+    networks:
       - interna
 
   bd_notificaciones:
     image: postgres:16
-    entorno:
+    environment:
       POSTGRES_USER: ${USUARIO_NOTIFICACIONES}
       POSTGRES_PASSWORD: ${CONTRASENA_NOTIFICACIONES}
       POSTGRES_DB: notificaciones
-    redes:
+    networks:
       - interna
 
+  # Business services
   pedidos:
     build: ./servicios/servicio-pedidos
-    entorno:
-      URL_BD: ${URL_BD_PEDIDOS}
+    ports:
+      - "8082:8082"
+    environment:
+      URL_BD_PEDIDOS: ${URL_BD_PEDIDOS}
+      USUARIO_PEDIDOS: ${USUARIO_PEDIDOS}
+      CONTRASENA_PEDIDOS: ${CONTRASENA_PEDIDOS}
       URL_EUREKA: ${URL_EUREKA}
       HOST_COLA: ${HOST_COLA}
-    depende_de:
+    depends_on:
       - eureka
       - bd_pedidos
       - cola_mensajes
-    redes:
+    networks:
       - interna
 
   inventario:
     build: ./servicios/servicio-inventario
-    entorno:
-      URL_BD: ${URL_BD_INVENTARIO}
+    ports:
+      - "8083:8083"
+    environment:
+      URL_BD_INVENTARIO: ${URL_BD_INVENTARIO}
+      USUARIO_INVENTARIO: ${USUARIO_INVENTARIO}
+      CONTRASENA_INVENTARIO: ${CONTRASENA_INVENTARIO}
       URL_EUREKA: ${URL_EUREKA}
       HOST_COLA: ${HOST_COLA}
-    depende_de:
+    depends_on:
       - eureka
       - bd_inventario
       - cola_mensajes
-    redes:
+    networks:
       - interna
 
   pagos:
     build: ./servicios/servicio-pagos
-    entorno:
-      URL_BD: ${URL_BD_PAGOS}
+    ports:
+      - "8084:8084"
+    environment:
+      URL_BD_PAGOS: ${URL_BD_PAGOS}
+      USUARIO_PAGOS: ${USUARIO_PAGOS}
+      CONTRASENA_PAGOS: ${CONTRASENA_PAGOS}
       URL_EUREKA: ${URL_EUREKA}
-    depende_de:
+    depends_on:
       - eureka
       - bd_pagos
-    redes:
+    networks:
       - interna
 
   notificaciones:
     build: ./servicios/servicio-notificaciones
-    entorno:
-      URL_BD: ${URL_BD_NOTIFICACIONES}
+    ports:
+      - "8085:8085"
+    environment:
+      URL_BD_NOTIFICACIONES: ${URL_BD_NOTIFICACIONES}
+      USUARIO_NOTIFICACIONES: ${USUARIO_NOTIFICACIONES}
+      CONTRASENA_NOTIFICACIONES: ${CONTRASENA_NOTIFICACIONES}
       URL_EUREKA: ${URL_EUREKA}
       HOST_COLA: ${HOST_COLA}
-    depende_de:
+    depends_on:
       - eureka
       - bd_notificaciones
       - cola_mensajes
-    redes:
+    networks:
       - interna
 
-redes:
+networks:
   interna:
     driver: bridge
   externa:
