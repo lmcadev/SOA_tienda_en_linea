@@ -166,8 +166,9 @@ Una vez que todos los contenedores estén ejecutándose:
 - **Health Checks**: Disponibles en `/actuator/health` para cada servicio
 
 ####  **Documentación de APIs (Swagger UI):**
-- **Inventario**: http://localhost:8083/swagger-ui.html
+- **Autenticación**: http://localhost:8081/swagger-ui.html
 - **Pedidos**: http://localhost:8082/swagger-ui.html  
+- **Inventario**: http://localhost:8083/swagger-ui.html
 - **Pagos**: http://localhost:8084/swagger-ui.html
 - **Notificaciones**: http://localhost:8085/swagger-ui.html
 
@@ -177,7 +178,7 @@ Una vez que todos los contenedores estén ejecutándose:
 |----------|--------|--------|-------------|
 | Eureka Server | 8761 |  Funcionando | Service Discovery y Dashboard |
 | API Gateway | 8090 |  Funcionando | Punto de entrada principal con filtros JWT |
-| Servicio Autenticación | 8081 |  En desarrollo | Gestión de usuarios y tokens JWT |
+| Servicio Autenticación | 8081 |  Funcionando | Gestión de usuarios y tokens JWT |
 | Servicio Pedidos | 8082 |  En desarrollo | Gestión del ciclo de vida de pedidos |
 | Servicio Inventario | 8083 |  En desarrollo | Control de stock y productos |
 | Servicio Pagos | 8084 |  En desarrollo | Procesamiento de transacciones |
@@ -287,6 +288,7 @@ Una vez que el sistema esté ejecutándose con `docker-compose up`, puedes acced
 | Servicio | Swagger UI | OpenAPI JSON |
 |----------|------------|--------------|
 | **API Gateway** | http://localhost:8090/swagger-ui.html | http://localhost:8090/v3/api-docs |
+| **Servicio Autenticación** | http://localhost:8081/swagger-ui.html | http://localhost:8081/v3/api-docs |
 | **Servicio Pedidos** | http://localhost:8082/swagger-ui.html | http://localhost:8082/v3/api-docs |
 | **Servicio Inventario** | http://localhost:8083/swagger-ui.html | http://localhost:8083/v3/api-docs |
 | **Servicio Pagos** | http://localhost:8084/swagger-ui.html | http://localhost:8084/v3/api-docs |
@@ -362,11 +364,35 @@ Los servicios utilizan la dependencia `springdoc-openapi`:
 </dependency>
 ```
 
-#### **Importar a Postman**
-1. Abre Postman
-2. Clic en "Import" 
-3. Selecciona "Link" y pega: `http://localhost:8082/v3/api-docs`
-4. Postman generará automáticamente la colección con todos los endpoints
+#### **Importar a Postman - TODOS los Servicios**
+
+ **Importante**: Para importar todos los microservicios, debes importar cada uno por separado:
+
+**1. Servicio de Autenticación:**
+- Abre Postman → Clic en "Import" → "Link"
+- Pega: `http://localhost:8081/v3/api-docs`
+- Nombra: "SOA Tienda - Autenticación"
+
+**2. Servicio de Pedidos:**
+- Clic en "Import" → "Link"
+- Pega: `http://localhost:8082/v3/api-docs`
+- Nombra: "SOA Tienda - Pedidos"
+
+**3. Servicio de Inventario:**
+- Clic en "Import" → "Link" 
+- Pega: `http://localhost:8083/v3/api-docs`
+- Nombra: "SOA Tienda - Inventario"
+
+**4. Servicio de Pagos:**
+- Clic en "Import" → "Link"
+- Pega: `http://localhost:8084/v3/api-docs`
+- Nombra: "SOA Tienda - Pagos"
+
+**5. Servicio de Notificaciones:**
+- Clic en "Import" → "Link"
+- Pega: `http://localhost:8085/v3/api-docs`
+- Nombra: "SOA Tienda - Notificaciones"
+
 
 #### **Generar Cliente SDK**
 ```bash
@@ -376,6 +402,57 @@ npx @openapitools/openapi-generator-cli generate \
   -g javascript \
   -o ./sdk/pedidos-client
 ```
+
+##  Conexión a Bases de Datos con HeidiSQL
+
+###  **Configuración de Conexiones PostgreSQL**
+
+Una vez que el sistema esté ejecutándose con `docker-compose up`, puedes conectarte a las bases de datos usando HeidiSQL con las siguientes configuraciones:
+
+| Servicio | Puerto Host | Base de Datos | Usuario | Contraseña | Conexión HeidiSQL |
+|----------|-------------|---------------|---------|------------|-------------------|
+| **Autenticación** | 5437 | `auth` | `postgres` | `auth_password` | localhost:5437 |
+| **Pedidos** | 5433 | `pedidos` | `postgres` | `pedidos_password` | localhost:5433 |
+| **Inventario** | 5434 | `inventario` | `postgres` | `inventario_password` | localhost:5434 |
+| **Pagos** | 5435 | `pagos` | `postgres` | `pagos_password` | localhost:5435 |
+| **Notificaciones** | 5436 | `notificaciones` | `postgres` | `notificaciones_password` | localhost:5436 |
+
+### Configuración de Conexiones HeidiSQL
+ Base de Datos de Autenticación
+IP/Host: localhost o 127.0.0.1
+Puerto: 5437
+Usuario: postgres
+Contraseña: auth_password
+Base de Datos: auth
+Tipo: PostgreSQL
+🛒 Base de Datos de Pedidos
+IP/Host: localhost o 127.0.0.1
+Puerto: 5433
+Usuario: postgres
+Contraseña: pedidos_password
+Base de Datos: pedidos
+Tipo: PostgreSQL
+ Base de Datos de Inventario
+IP/Host: localhost o 127.0.0.1
+Puerto: 5434
+Usuario: postgres
+Contraseña: inventario_password
+Base de Datos: inventario
+Tipo: PostgreSQL
+ Base de Datos de Pagos
+IP/Host: localhost o 127.0.0.1
+Puerto: 5435
+Usuario: postgres
+Contraseña: pagos_password
+Base de Datos: pagos
+Tipo: PostgreSQL
+ Base de Datos de Notificaciones
+IP/Host: localhost o 127.0.0.1
+Puerto: 5436
+Usuario: postgres
+Contraseña: notificaciones_password
+Base de Datos: notificaciones
+Tipo: PostgreSQL
 
 ##  Monitoreo y Observabilidad
 

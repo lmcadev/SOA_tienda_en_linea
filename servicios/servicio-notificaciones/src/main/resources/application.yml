@@ -25,3 +25,11 @@ management:
     web:
       exposure:
         include: "health,info"
+
+# Configuración de OpenAPI/Swagger
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method

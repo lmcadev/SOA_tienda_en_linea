@@ -3,6 +3,16 @@ spring:
     name: servicio-autenticacion
   main:
     allow-bean-definition-overriding: true
+  datasource:
+    url: ${URL_BD_AUTH}
+    username: ${USUARIO_AUTH}
+    password: ${CONTRASENA_AUTH}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        '[format_sql]': true
 
 eureka:
   client:
@@ -10,7 +20,7 @@ eureka:
       defaultZone: ${URL_EUREKA}
 
 server:
-  port: 0
+  port: 8081
 
 management:
   endpoints:
@@ -18,4 +28,10 @@ management:
       exposure:
         include: "health,info"
 
-SECRETO_JWT: ${SECRETO_JWT}
+# Configuración de OpenAPI/Swagger
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method

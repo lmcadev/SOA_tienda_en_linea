@@ -23,15 +23,21 @@ services:
       - interna
       - externa
 
-  # autenticacion:
-  #   build: ./plataforma/servicio-autenticacion
-  #   environment:
-  #     SECRETO_JWT: ${SECRETO_JWT}
-  #     URL_EUREKA: ${URL_EUREKA}
-  #   depends_on:
-  #     - eureka
-  #   networks:
-  #     - interna
+  autenticacion:
+    build: ./plataforma/servicio-autenticacion
+    ports:
+      - "8081:8081"
+    environment:
+      SECRETO_JWT: miClaveSecretaJWTSuperSeguraParaProduccion123456789AbcDef!@#$%
+      URL_EUREKA: http://eureka:8761/eureka
+      URL_BD_AUTH: jdbc:postgresql://bd_auth:5432/auth
+      USUARIO_AUTH: postgres
+      CONTRASENA_AUTH: auth_password
+    depends_on:
+      - eureka
+      - bd_auth
+    networks:
+      - interna
 
   cola_mensajes:
     image: rabbitmq:3-management
@@ -44,6 +50,8 @@ services:
   # Database services
   bd_pedidos:
     image: postgres:16
+    ports:
+      - "5433:5432"
     environment:
       POSTGRES_USER: ${USUARIO_PEDIDOS}
       POSTGRES_PASSWORD: ${CONTRASENA_PEDIDOS}
@@ -53,6 +61,8 @@ services:
 
   bd_inventario:
     image: postgres:16
+    ports:
+      - "5434:5432"
     environment:
       POSTGRES_USER: ${USUARIO_INVENTARIO}
       POSTGRES_PASSWORD: ${CONTRASENA_INVENTARIO}
@@ -62,6 +72,8 @@ services:
 
   bd_pagos:
     image: postgres:16
+    ports:
+      - "5435:5432"
     environment:
       POSTGRES_USER: ${USUARIO_PAGOS}
       POSTGRES_PASSWORD: ${CONTRASENA_PAGOS}
@@ -71,10 +83,23 @@ services:
 
   bd_notificaciones:
     image: postgres:16
+    ports:
+      - "5436:5432"
     environment:
       POSTGRES_USER: ${USUARIO_NOTIFICACIONES}
       POSTGRES_PASSWORD: ${CONTRASENA_NOTIFICACIONES}
       POSTGRES_DB: notificaciones
+    networks:
+      - interna
+
+  bd_auth:
+    image: postgres:16
+    ports:
+      - "5437:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: auth_password
+      POSTGRES_DB: auth
     networks:
       - interna
 

@@ -1,6 +1,6 @@
 spring:
   application:
-    name: puerta-enlace
+    name: Gateway
   cloud:
     gateway:
       routes:

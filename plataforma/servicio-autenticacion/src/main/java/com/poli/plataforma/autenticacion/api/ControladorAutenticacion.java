@@ -39,11 +39,27 @@ public class ControladorAutenticacion {
       return ResponseEntity.status(401).build();
     }
     Usuario usuario = usuarioOpt.get();
-    // Comparación de contraseñas simple
-    if (!usuario.getContrasena().equals(peticion.getContrasena())) {
+    // Validar contraseña usando BCrypt
+    if (!servicioUsuarios.validarContrasena(peticion.getContrasena(), usuario.getContrasena())) {
       return ResponseEntity.status(401).build();
     }
     String token = servicioToken.generarToken(usuario.getUsuario(), usuario.getRoles());
     return ResponseEntity.ok(new RespuestaAutenticacion(token));
+  }
+
+  @Operation(summary = "Registrar usuario", description = "Crea un nuevo usuario con contraseña cifrada")
+  @PostMapping("/registro")
+  public ResponseEntity<String> registrarUsuario(@Valid @RequestBody PeticionAutenticacion peticion) {
+    // Verificar que el usuario no exista
+    if (servicioUsuarios.buscarPorUsuario(peticion.getUsuario()).isPresent()) {
+      return ResponseEntity.badRequest().body("El usuario ya existe");
+    }
+    
+    // Crear usuario con rol CLIENTE por defecto y contraseña cifrada
+    java.util.HashSet<String> roles = new java.util.HashSet<>();
+    roles.add("CLIENTE");
+    servicioUsuarios.crearUsuario(peticion.getUsuario(), peticion.getContrasena(), roles);
+    
+    return ResponseEntity.ok("Usuario registrado exitosamente");
   }
 }
