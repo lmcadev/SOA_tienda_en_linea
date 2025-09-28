@@ -13,8 +13,8 @@
 ##  Estado Actual del Proyecto
 
 ###  Completado
-- **Eureka Server**:  Funcionando correctamente en puerto 8761
-- **API Gateway**:  Funcionando en puerto 8090 con filtros JWT
+- **Eureka Server**:  Funcionando correctamente
+- **API Gateway**:  Funcionando con filtros JWT
 - **RabbitMQ**:  Operativo con panel de administración
 - **PostgreSQL**:  Bases de datos configuradas para cada servicio
 - **Docker Compose**:  Orquestación completa de contenedores
@@ -52,8 +52,8 @@ SOA_tienda_en_linea/
 │   ├── dto-comunes/               # DTOs reutilizables
 │   └── eventos-comunes/           # Eventos para mensajes asíncronos
 ├── plataforma/                    # Servicios de infraestructura
-│   ├── eureka-servidor/          # Descubrimiento de servicios (Puerto: 8761)
-│   ├── puerta-enlace/            # API Gateway con JWT (Puerto: 8090)
+│   ├── eureka-servidor/          # Descubrimiento de servicios
+│   ├── puerta-enlace/            # API Gateway con JWT
 │   └── servicio-autenticacion/   # Servicio de autenticación
 ├── servicios/                     # Microservicios de negocio
 │   ├── servicio-inventario/      # Gestión de inventario y stock
@@ -76,10 +76,7 @@ SOA_tienda_en_linea/
 - **Maven Multi-Module**
 
 ### Base de Datos
-- **PostgreSQL 16** (para cada microservicio)
-
-### Mensajería
-- **RabbitMQ 3** (con panel de administración)
+- **PostgreSQL 16** 
 
 ### Contenedores
 - **Docker & Docker Compose**
@@ -110,26 +107,19 @@ Crea un archivo `.env` en la raíz del proyecto:
 ```env
 # URLs de servicios
 URL_EUREKA=http://eureka:8761/eureka
-SECRETO_JWT=mi_super_secreto_jwt_para_produccion
-JWT_SECRET=mi_super_secreto_jwt_para_produccion
+CLAVE_PUBLICA_JWT=ZEJ7MvyvopwzPscyah3YEMRXg6NaCLry7cqI1oSO1F2qDFAdgA
+SECRETO_JWT=waA6HRsOAq9GlmwQmb2hUlQ3XCbcUQxT5sLnipAyJIxgakzFLK
 
-# Configuración de colas RabbitMQ
+# Configuración de colas
 HOST_COLA=cola_mensajes
-RABBITMQ_USER=admin
-RABBITMQ_PASS=admin
 
-# Base de datos - Autenticación
-URL_BD_AUTH=jdbc:postgresql://bd_auth:5432/auth
-USUARIO_AUTH=auth_user
-CONTRASENA_AUTH=auth_pass
-
-# Base de datos - Pedidos  
+# Base de datos - Pedidos
 URL_BD_PEDIDOS=jdbc:postgresql://bd_pedidos:5432/pedidos
 USUARIO_PEDIDOS=pedidos_user
 CONTRASENA_PEDIDOS=pedidos_pass
 
 # Base de datos - Inventario
-URL_BD_INVENTARIO=jdbc:postgresql://bd_inventario:5432/inventario  
+URL_BD_INVENTARIO=jdbc:postgresql://bd_inventario:5432/inventario
 USUARIO_INVENTARIO=inventario_user
 CONTRASENA_INVENTARIO=inventario_pass
 
@@ -142,6 +132,11 @@ CONTRASENA_PAGOS=pagos_pass
 URL_BD_NOTIFICACIONES=jdbc:postgresql://bd_notificaciones:5432/notificaciones
 USUARIO_NOTIFICACIONES=notif_user
 CONTRASENA_NOTIFICACIONES=notif_pass
+
+# Base de datos - Auth
+URL_BD_AUTH=jdbc:postgresql://bd_auth:5432/auth
+USUARIO_AUTH=postgres
+CONTRASENA_AUTH=auth_password
 ```
 
 ### 3. Compilar el Proyecto
@@ -162,7 +157,6 @@ Una vez que todos los contenedores estén ejecutándose:
 
 - **Eureka Dashboard**: http://localhost:8761
 - **API Gateway**: http://localhost:8090  
-- **RabbitMQ Management**: http://localhost:15672 (admin/admin)
 - **Health Checks**: Disponibles en `/actuator/health` para cada servicio
 
 ####  **Documentación de APIs (Swagger UI):**
@@ -183,33 +177,10 @@ Una vez que todos los contenedores estén ejecutándose:
 | Servicio Inventario | 8083 |  En desarrollo | Control de stock y productos |
 | Servicio Pagos | 8084 |  En desarrollo | Procesamiento de transacciones |
 | Servicio Notificaciones | 8085 |  En desarrollo | Sistema de notificaciones |
-| RabbitMQ | 5672, 15672 |  Funcionando | Message Broker + Management UI |
 | PostgreSQL Instances | 5432 |  Funcionando | Bases de datos (internas) |
 
 ##  Configuración de Desarrollo
 
-### Ejecutar Servicios Individualmente
-
-1. **Iniciar Eureka Server**:
-```bash
-cd plataforma/eureka-servidor
-mvn spring-boot:run
-```
-
-2. **Iniciar otros servicios** (en orden):
-```bash
-# API Gateway
-cd plataforma/puerta-enlace
-mvn spring-boot:run
-
-# Servicio de Autenticación
-cd plataforma/servicio-autenticacion
-mvn spring-boot:run
-
-# Servicios de negocio
-cd servicios/servicio-inventario
-mvn spring-boot:run
-```
 
 ### Configuración de Base de Datos Local
 
@@ -224,24 +195,6 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-```
-
-### Configuración de Swagger/OpenAPI
-
-Los servicios incluyen configuración automática de Swagger. Para personalizar:
-
-```yaml
-# application.yml - Configuración OpenAPI por servicio
-springdoc:
-  api-docs:
-    path: /v3/api-docs
-  swagger-ui:
-    path: /swagger-ui.html
-    operationsSorter: method
-  info:
-    title: "API del Servicio [Nombre]"
-    version: "1.0.0"
-    description: "Documentación de la API del microservicio"
 ```
 
 ##  APIs Principales
@@ -277,13 +230,12 @@ springdoc:
 - `POST /notificaciones` - Enviar notificación
 - `PUT /notificaciones/{id}/marcar-leida` - Marcar como leída
 
-##   Documentación de APIs con Swagger/OpenAPI
+##   Documentación de APIs con Swagger
 
-Todos los microservicios del sistema incluyen documentación automática de APIs generada con **Swagger/OpenAPI 3**, facilitando la exploración, prueba y comprensión de los endpoints disponibles.
+Todos los microservicios del sistema incluyen documentación automática de APIs generada con Swagger
 
 ###  Acceso a la Documentación
 
-Una vez que el sistema esté ejecutándose con `docker-compose up`, puedes acceder a la documentación interactiva de cada servicio:
 
 | Servicio | Swagger UI | OpenAPI JSON |
 |----------|------------|--------------|
@@ -298,37 +250,12 @@ Una vez que el sistema esté ejecutándose con `docker-compose up`, puedes acced
 
 ###  Cómo Usar Swagger UI
 
-#### 1. **Explorar Endpoints**
+#### **Explorar Endpoints**
 - Navega por todos los endpoints organizados por controlador
 - Ve los métodos HTTP disponibles (GET, POST, PUT, DELETE)
 - Consulta parámetros requeridos y opcionales
 - Revisa los modelos de datos de entrada y salida
 
-#### 2. **Probar APIs Directamente**
-```bash
-# Ejemplo: Probar endpoint desde Swagger UI
-1. Abre http://localhost:8083/swagger-ui.html (Servicio Inventario)
-2. Expande el endpoint "GET /inventario"
-3. Haz clic en "Try it out"
-4. Completa los parámetros si es necesario
-5. Haz clic en "Execute"
-6. Ve la respuesta en tiempo real
-```
-
-#### 3. **Autenticación JWT**
-Para endpoints que requieren autenticación:
-```bash
-# 1. Obtén un token JWT del servicio de autenticación
-POST /auth/login
-{
-  "username": "usuario",
-  "password": "contraseña"
-}
-
-# 2. En Swagger UI, haz clic en "Authorize" 
-# 3. Ingresa: Bearer {tu-jwt-token}
-# 4. Ahora puedes probar endpoints protegidos
-```
 
 ###  Información Disponible en la Documentación
 
@@ -350,19 +277,6 @@ Cada servicio documenta automáticamente:
 -  Esquemas de autenticación JWT
 -  Endpoints públicos vs protegidos
 -  Scopes y permisos requeridos
-
-###  Configuración Técnica
-
-Los servicios utilizan la dependencia `springdoc-openapi`:
-
-```xml
-<!-- En los POM.xml de cada servicio -->
-<dependency>
-    <groupId>org.springdoc</groupId>
-    <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-    <version>2.6.0</version>
-</dependency>
-```
 
 #### **Importar a Postman - TODOS los Servicios**
 
@@ -393,15 +307,6 @@ Los servicios utilizan la dependencia `springdoc-openapi`:
 - Pega: `http://localhost:8085/v3/api-docs`
 - Nombra: "SOA Tienda - Notificaciones"
 
-
-#### **Generar Cliente SDK**
-```bash
-# Usar OpenAPI Generator para crear SDKs
-npx @openapitools/openapi-generator-cli generate \
-  -i http://localhost:8082/v3/api-docs \
-  -g javascript \
-  -o ./sdk/pedidos-client
-```
 
 ##  Conexión a Bases de Datos con HeidiSQL
 
