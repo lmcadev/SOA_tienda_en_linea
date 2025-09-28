@@ -35,6 +35,8 @@ public class ConfiguracionSeguridad {
             .authorizeHttpRequests(authz -> authz
                 // Permitir acceso público a endpoints de autenticación
                 .requestMatchers("/auth/**").permitAll()
+                // Permitir acceso público a endpoints de inicialización
+                .requestMatchers("/api/inicializacion/**").permitAll()
                 // Permitir acceso público a documentación Swagger
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
                 // Permitir acceso público a actuator
