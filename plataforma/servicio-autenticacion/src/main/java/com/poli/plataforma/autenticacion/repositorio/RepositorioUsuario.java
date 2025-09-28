@@ -1,8 +1,9 @@
 package com.poli.plataforma.autenticacion.repositorio;
 
-import com.poli.plataforma.autenticacion.modelo.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import com.poli.plataforma.autenticacion.entidad.Usuario;
 
 import java.util.Optional;
 

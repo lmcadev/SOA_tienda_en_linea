@@ -1,7 +1,7 @@
 package com.poli.servicios.inventario.api;
 
 import com.poli.servicios.inventario.api.dto.ProductoInventarioDTO;
-import com.poli.servicios.inventario.dominio.ProductoInventario;
+import com.poli.servicios.inventario.entidad.ProductoInventario;
 import com.poli.servicios.inventario.servicio.ServicioInventario;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

@@ -1,4 +1,4 @@
-package com.poli.servicios.pagos.dominio;
+package com.poli.servicios.pagos.entidad;
 
 import jakarta.persistence.*;
 import java.math.BigDecimal;

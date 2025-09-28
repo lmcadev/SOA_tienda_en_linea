@@ -1,4 +1,4 @@
-package com.poli.servicios.inventario.dominio;
+package com.poli.servicios.inventario.entidad;
 
 import jakarta.persistence.*;
 import java.time.OffsetDateTime;

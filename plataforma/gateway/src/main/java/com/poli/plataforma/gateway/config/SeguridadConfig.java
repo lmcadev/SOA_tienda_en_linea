@@ -1,4 +1,4 @@
-package com.empresa.plataforma.puertaenlace.config;
+package com.poli.plataforma.gateway.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

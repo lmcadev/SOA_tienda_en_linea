@@ -10,15 +10,15 @@ public class ProductoInventarioDTO {
   @Schema(description = "Identificador del producto", example = "1")
   public Long id;
 
-  @Schema(description = "Código único del producto", example = "SKU-ABC-123")
+  @Schema(description = "Código único del producto", example = "ABCDE")
   public String codigoProducto;
 
-  @Schema(description = "Nombre del producto", example = "Boquilla 1.5mm")
+  @Schema(description = "Nombre del producto", example = "Pan tajado")
   public String nombre;
 
   @Schema(description = "Cantidad disponible", example = "50")
   public Integer cantidad;
 
-  @Schema(description = "Ubicación física", example = "Bodega A - Estante 3")
+  @Schema(description = "Ubicación física", example = "Estante 3")
   public String ubicacion;
 }

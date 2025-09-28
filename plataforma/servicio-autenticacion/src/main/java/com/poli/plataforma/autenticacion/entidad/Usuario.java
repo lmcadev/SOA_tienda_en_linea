@@ -1,4 +1,4 @@
-package com.poli.plataforma.autenticacion.modelo;
+package com.poli.plataforma.autenticacion.entidad;
 
 import jakarta.persistence.*;
 import java.util.Set;

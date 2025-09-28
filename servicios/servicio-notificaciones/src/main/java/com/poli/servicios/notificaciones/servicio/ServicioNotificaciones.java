@@ -1,8 +1,9 @@
 package com.poli.servicios.notificaciones.servicio;
 
 import com.poli.servicios.notificaciones.api.dto.NotificacionDTO;
-import com.poli.servicios.notificaciones.dominio.Notificacion;
 import com.poli.servicios.notificaciones.dominio.NotificacionRepositorio;
+import com.poli.servicios.notificaciones.entidad.Notificacion;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;

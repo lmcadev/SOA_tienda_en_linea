@@ -1,8 +1,9 @@
 package com.poli.servicios.pagos.servicio;
 
 import com.poli.servicios.pagos.api.dto.PagoDTO;
-import com.poli.servicios.pagos.dominio.Pago;
 import com.poli.servicios.pagos.dominio.PagoRepositorio;
+import com.poli.servicios.pagos.entidad.Pago;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;

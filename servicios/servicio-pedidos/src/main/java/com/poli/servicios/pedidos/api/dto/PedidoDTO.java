@@ -9,7 +9,7 @@ public class PedidoDTO {
   @Schema(description = "Identificador del pedido", example = "1")
   public Long id;
 
-  @Schema(description = "Identificador del cliente", example = "100")
+  @Schema(description = "Identificador del cliente", example = "5")
   public Long clienteId;
 
   @Schema(description = "Fecha de creación", example = "2024-06-05T12:30:00Z")
@@ -18,6 +18,6 @@ public class PedidoDTO {
   @Schema(description = "Estado del pedido", example = "CREADO")
   public String estado;
 
-  @Schema(description = "Total del pedido", example = "99.99")
+  @Schema(description = "Total del pedido", example = "150000.00")
   public BigDecimal total;
 }

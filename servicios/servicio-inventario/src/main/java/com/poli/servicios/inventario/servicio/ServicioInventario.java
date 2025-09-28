@@ -1,8 +1,9 @@
 package com.poli.servicios.inventario.servicio;
 
 import com.poli.servicios.inventario.api.dto.ProductoInventarioDTO;
-import com.poli.servicios.inventario.dominio.ProductoInventario;
 import com.poli.servicios.inventario.dominio.ProductoInventarioRepositorio;
+import com.poli.servicios.inventario.entidad.ProductoInventario;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;

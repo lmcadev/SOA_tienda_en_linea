@@ -418,40 +418,45 @@ Una vez que el sistema esté ejecutándose con `docker-compose up`, puedes conec
 | **Notificaciones** | 5436 | `notificaciones` | `postgres` | `notificaciones_password` | localhost:5436 |
 
 ### Configuración de Conexiones HeidiSQL
- Base de Datos de Autenticación
-IP/Host: localhost o 127.0.0.1
+#### Base de Datos de Autenticación
+- Base de Datos de Pedidos
+Host/IP: localhost o 127.0.0.1
+Puerto: 5433
+Usuario: pedidos_user
+Contraseña: pedidos_pass
+Base de Datos: pedidos
+Tipo: PostgreSQL
+
+- Base de Datos de Inventario
+Host/IP: localhost o 127.0.0.1
+Puerto: 5434
+Usuario: inventario_user
+Contraseña: inventario_pass
+Base de Datos: inventario
+Tipo: PostgreSQL
+- Base de Datos de Pagos
+
+Host/IP: localhost o 127.0.0.1
+Puerto: 5435
+Usuario: pagos_user
+Contraseña: pagos_pass
+Base de Datos: pagos
+Tipo: PostgreSQL
+
+- Base de Datos de Notificaciones
+Host/IP: localhost o 127.0.0.1
+Puerto: 5436
+Usuario: notif_user
+Contraseña: notif_pass
+Base de Datos: notificaciones
+Tipo: PostgreSQL
+
+- Base de Datos de Autenticación
+Host/IP: localhost o 127.0.0.1
 Puerto: 5437
 Usuario: postgres
 Contraseña: auth_password
 Base de Datos: auth
-Tipo: PostgreSQL
-🛒 Base de Datos de Pedidos
-IP/Host: localhost o 127.0.0.1
-Puerto: 5433
-Usuario: postgres
-Contraseña: pedidos_password
-Base de Datos: pedidos
-Tipo: PostgreSQL
- Base de Datos de Inventario
-IP/Host: localhost o 127.0.0.1
-Puerto: 5434
-Usuario: postgres
-Contraseña: inventario_password
-Base de Datos: inventario
-Tipo: PostgreSQL
- Base de Datos de Pagos
-IP/Host: localhost o 127.0.0.1
-Puerto: 5435
-Usuario: postgres
-Contraseña: pagos_password
-Base de Datos: pagos
-Tipo: PostgreSQL
- Base de Datos de Notificaciones
-IP/Host: localhost o 127.0.0.1
-Puerto: 5436
-Usuario: postgres
-Contraseña: notificaciones_password
-Base de Datos: notificaciones
 Tipo: PostgreSQL
 
 ##  Monitoreo y Observabilidad

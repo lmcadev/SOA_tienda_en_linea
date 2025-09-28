@@ -10,9 +10,9 @@ public class PagoDTO {
   public Long id;
   @Schema(description = "Identificador del pedido asociado", example = "5")
   public Long pedidoId;
-  @Schema(description = "Monto pagado", example = "150.00")
+  @Schema(description = "Monto pagado", example = "150000.00")
   public BigDecimal monto;
-  @Schema(description = "Medio de pago", example = "TARJETA")
+  @Schema(description = "Medio de pago", example = "NEQUI")
   public String medioPago;
   @Schema(description = "Estado del pago", example = "APROBADO")
   public String estado;

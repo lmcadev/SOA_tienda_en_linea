@@ -1,4 +1,4 @@
-package com.empresa.plataforma.puertaenlace.seguridad;
+package com.poli.plataforma.gateway.seguridad;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;

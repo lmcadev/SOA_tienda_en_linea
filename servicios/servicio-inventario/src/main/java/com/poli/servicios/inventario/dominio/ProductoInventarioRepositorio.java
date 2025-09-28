@@ -1,6 +1,9 @@
 package com.poli.servicios.inventario.dominio;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.poli.servicios.inventario.entidad.ProductoInventario;
+
 import java.util.Optional;
 
 /**

@@ -1,8 +1,9 @@
 package com.poli.servicios.pedidos.servicio;
 
 import com.poli.servicios.pedidos.api.dto.PedidoDTO;
-import com.poli.servicios.pedidos.dominio.Pedido;
 import com.poli.servicios.pedidos.dominio.PedidoRepositorio;
+import com.poli.servicios.pedidos.entidad.Pedido;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;

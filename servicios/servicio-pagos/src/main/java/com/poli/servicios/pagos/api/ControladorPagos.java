@@ -1,7 +1,7 @@
 package com.poli.servicios.pagos.api;
 
 import com.poli.servicios.pagos.api.dto.PagoDTO;
-import com.poli.servicios.pagos.dominio.Pago;
+import com.poli.servicios.pagos.entidad.Pago;
 import com.poli.servicios.pagos.servicio.ServicioPagos;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

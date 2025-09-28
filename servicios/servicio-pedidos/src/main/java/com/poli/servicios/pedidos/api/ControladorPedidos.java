@@ -1,7 +1,7 @@
 package com.poli.servicios.pedidos.api;
 
 import com.poli.servicios.pedidos.api.dto.PedidoDTO;
-import com.poli.servicios.pedidos.dominio.Pedido;
+import com.poli.servicios.pedidos.entidad.Pedido;
 import com.poli.servicios.pedidos.servicio.ServicioPedidos;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

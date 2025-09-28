@@ -1,7 +1,7 @@
 package com.poli.servicios.notificaciones.api;
 
 import com.poli.servicios.notificaciones.api.dto.NotificacionDTO;
-import com.poli.servicios.notificaciones.dominio.Notificacion;
+import com.poli.servicios.notificaciones.entidad.Notificacion;
 import com.poli.servicios.notificaciones.servicio.ServicioNotificaciones;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

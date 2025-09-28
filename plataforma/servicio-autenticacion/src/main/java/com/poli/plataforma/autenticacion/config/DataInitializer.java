@@ -1,6 +1,6 @@
 package com.poli.plataforma.autenticacion.config;
 
-import com.poli.plataforma.autenticacion.modelo.Usuario;
+import com.poli.plataforma.autenticacion.entidad.Usuario;
 import com.poli.plataforma.autenticacion.repositorio.RepositorioUsuario;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;

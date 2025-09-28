@@ -1,4 +1,4 @@
-package com.poli.servicios.notificaciones.dominio;
+package com.poli.servicios.notificaciones.entidad;
 
 import jakarta.persistence.*;
 import java.time.OffsetDateTime;

@@ -10,8 +10,8 @@ services:
     networks:
       - interna
 
-  puerta_enlace:
-    build: ./plataforma/puerta-enlace
+  gateway:
+    build: ./plataforma/gateway
     ports:
       - "8090:8090"
     environment:
@@ -28,7 +28,7 @@ services:
     ports:
       - "8081:8081"
     environment:
-      SECRETO_JWT: miClaveSecretaJWTSuperSeguraParaProduccion123456789AbcDef!@#$%
+      SECRETO_JWT: ${SECRETO_JWT}
       URL_EUREKA: http://eureka:8761/eureka
       URL_BD_AUTH: jdbc:postgresql://bd_auth:5432/auth
       USUARIO_AUTH: postgres
@@ -47,7 +47,7 @@ services:
     networks:
       - interna
 
-  # Database services
+  # Servicios de base de datos
   bd_pedidos:
     image: postgres:16
     ports:
@@ -103,7 +103,7 @@ services:
     networks:
       - interna
 
-  # Business services
+  # servicios de la aplicación
   pedidos:
     build: ./servicios/servicio-pedidos
     ports:

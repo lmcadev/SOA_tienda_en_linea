@@ -2,7 +2,7 @@ package com.poli.plataforma.autenticacion.api;
 
 import com.poli.plataforma.autenticacion.dto.PeticionAutenticacion;
 import com.poli.plataforma.autenticacion.dto.RespuestaAutenticacion;
-import com.poli.plataforma.autenticacion.modelo.Usuario;
+import com.poli.plataforma.autenticacion.entidad.Usuario;
 import com.poli.plataforma.autenticacion.servicio.ServicioToken;
 import com.poli.plataforma.autenticacion.servicio.ServicioUsuarios;
 import io.swagger.v3.oas.annotations.Operation;

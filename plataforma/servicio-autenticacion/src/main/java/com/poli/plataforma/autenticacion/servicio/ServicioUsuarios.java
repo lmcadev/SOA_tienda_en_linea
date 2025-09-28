@@ -1,6 +1,6 @@
 package com.poli.plataforma.autenticacion.servicio;
 
-import com.poli.plataforma.autenticacion.modelo.Usuario;
+import com.poli.plataforma.autenticacion.entidad.Usuario;
 import com.poli.plataforma.autenticacion.repositorio.RepositorioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
